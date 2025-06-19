@@ -19,7 +19,8 @@ class AuthController extends Controller
             'last_name'  => 'required|string|max:255',
             'gender'     => ['required', Rule::in(['male', 'female'])],
             'birth_date' => 'nullable|date',
-            'role'       => ['required', Rule::in(['player', 'coach', 'admin'])],
+            'phone'      => 'nullable',
+            'role'       => [Rule::in(['player', 'coach', 'admin'])],
             'email'      => 'required|email|unique:users,email',
             'password'   => 'required|string|min:6|confirmed',
         ]);
@@ -27,6 +28,7 @@ class AuthController extends Controller
         $user = User::create([
             'first_name' => $validated['first_name'],
             'last_name'  => $validated['last_name'],
+            'phone'      => $validated['phone'] ?? null,
             'name'       => $validated['first_name'] . ' ' . $validated['last_name'],
             'gender'     => $validated['gender'],
             'birth_date' => $validated['birth_date'],

@@ -1,0 +1,150 @@
+:root {
+    --primary-color: #040404;
+    --neutral-color: #eeeeee;
+}
+
+.mainBody {
+    background-color: var(--primary-color);
+    color: var(--neutral-color);
+}
+
+.footer-section h4 {
+    font-style: italic;
+}
+.footer-section a {
+    font-style: italic;
+    text-transform: uppercase;
+    position: relative;
+    text-decoration: none;
+    color: var(--neutral-color);
+    font-size: 16px;
+}
+.footer-section a:hover {
+   color: #c2c2c2;
+}
+
+.footer-section a::after {
+    content: "";
+    position: absolute;
+    height: 1.5px;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    background-color: var(--neutral-color);
+    transition: width 0.5s;
+}
+
+.footer-section a:hover::after {
+    width: 100%;
+}
+.footer-section a::before {
+    content: "";
+    position: absolute;
+    height: 1.5px;
+    right: 0;
+    bottom: -2px;
+    width: 0;
+    background-color: var(--neutral-color);
+    transition: width 0.5s ease;
+}
+
+.footer-section a:hover::before {
+    width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.footer {
+    background-color: var(--primary-color);
+    color: var(--neutral-color);
+    text-align: center;
+    padding: 20px 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 100px;
+}
+
+.footer-section {
+    /* flex: 1 1 calc(100% / 4 - 20px); */
+    width: 200px;
+}
+
+.footer-section h5 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.cta {
+    margin: 20px 0;
+}
+
+.signup-btn {
+    background: none;
+    color: var(--neutral-color);
+    border: 2px solid var(--neutral-color);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.signup-btn:hover {
+    background: var(--neutral-color);
+    color: #3e4551;
+}
+
+.social-media a {
+    color: var(--neutral-color);
+    margin: 0 10px;
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.social-media a:hover {
+    color: var(--neutral-color);
+}
+
+.copyright {
+    text-align: center;
+    background-color: var(--primary-color);
+    padding: 10px;
+    font-size: 14px;
+}
+
+.copyright a {
+    color: var(--neutral-color);
+    text-decoration: none;
+}
+
+.copyright a:hover {
+    text-decoration: none;
+    color: #c2c2c2;
+}
+
+@media (max-width: 740px) {
+    .footer-section h5 {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .footer-section p {
+        margin-bottom: 10px;
+        font-size: 15px;
+    }
+}

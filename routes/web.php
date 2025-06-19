@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+Route::resource('users', UserController::class);
+
+Route::post('/users/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
+Route::delete('/users/{user}/delete-permanently', [UserController::class, 'deletePermanently'])->name('users.deletePermanently');
 
 require __DIR__.'/auth.php';
