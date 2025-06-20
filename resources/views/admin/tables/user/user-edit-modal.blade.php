@@ -1,6 +1,6 @@
 <div class="modal fade" id="editUserModal{{ $user->id }}" tabindex="-1" role="dialog"
     aria-labelledby="editUserModalLabel{{ $user->id }}" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Added modal-lg -->
         <div class="modal-content" style="background-color: #ffffff; border-radius: 8px;">
             <div class="modal-header border-bottom-0" style="padding: 1.5rem 1.5rem 0;">
                 <h5 class="modal-title" id="editUserModalLabel{{ $user->id }}"
@@ -17,20 +17,20 @@
                 @method('PUT')
 
                 <div class="modal-body" style="padding: 0 1.5rem 1rem;">
-                    <!-- First Name -->
-                    <div class="form-group mb-3">
-                        <label for="first_name" class="form-label" style="color: #000000;">First Name</label>
-                        <input type="text" class="form-control" name="first_name"
-                            value="{{ old('first_name', $user->first_name) }}" required
-                            style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
-                    </div>
-
-                    <!-- Last Name -->
-                    <div class="form-group mb-3">
-                        <label for="last_name" class="form-label" style="color: #000000;">Last Name</label>
-                        <input type="text" class="form-control" name="last_name"
-                            value="{{ old('last_name', $user->last_name) }}" required
-                            style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
+                    <!-- First Name & Last Name -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="first_name" class="form-label" style="color: #000000;">First Name</label>
+                            <input type="text" class="form-control" name="first_name"
+                                value="{{ old('first_name', $user->first_name) }}" required
+                                style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="last_name" class="form-label" style="color: #000000;">Last Name</label>
+                            <input type="text" class="form-control" name="last_name"
+                                value="{{ old('last_name', $user->last_name) }}" required
+                                style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
+                        </div>
                     </div>
 
                     <!-- Email -->
@@ -50,40 +50,41 @@
                             style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
                     </div>
 
-                    <!-- Phone -->
-                    <div class="form-group mb-3">
-                        <label for="phone" class="form-label" style="color: #000000;">Phone</label>
-                        <input type="text" class="form-control" name="phone"
-                            value="{{ old('phone', $user->phone) }}"
-                            style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
+                    <!-- Phone & Birth Date -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label" style="color: #000000;">Phone</label>
+                            <input type="text" class="form-control" name="phone"
+                                value="{{ old('phone', $user->phone) }}"
+                                style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="birth_date" class="form-label" style="color: #000000;">Birth Date</label>
+                            <input type="date" class="form-control" name="birth_date"
+                                value="{{ $user->birth_date ? \Carbon\Carbon::parse($user->birth_date)->format('Y-m-d') : '' }}"
+                                style="border-radius: 5px;">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="birth_date">Birth Date</label>
-                        <input type="date" class="form-control" name="birth_date"
-                            value="{{ $user->birth_date ? \Carbon\Carbon::parse($user->birth_date)->format('Y-m-d') : '' }}"
-                            style="border-radius: 5px;">
-                    </div>
-
-                    <!-- Gender -->
-                    <div class="form-group mb-3">
-                        <label for="gender" class="form-label" style="color: #000000;">Gender</label>
-                        <select name="gender" class="form-control" required
-                            style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
-                            <option value="male" {{ $user->gender == 'male' ? 'selected' : '' }}>Male</option>
-                            <option value="female" {{ $user->gender == 'female' ? 'selected' : '' }}>Female</option>
-                        </select>
-                    </div>
-
-                    <!-- Role -->
-                    <div class="form-group mb-3">
-                        <label for="role" class="form-label" style="color: #000000;">Role</label>
-                        <select name="role" class="form-control" required
-                            style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
-                            <option value="player" {{ $user->role == 'player' ? 'selected' : '' }}>Player</option>
-                            <option value="coach" {{ $user->role == 'coach' ? 'selected' : '' }}>Coach</option>
-                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                        </select>
+                    <!-- Gender & Role -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="gender" class="form-label" style="color: #000000;">Gender</label>
+                            <select name="gender" class="form-control" required
+                                style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
+                                <option value="male" {{ $user->gender == 'male' ? 'selected' : '' }}>Male</option>
+                                <option value="female" {{ $user->gender == 'female' ? 'selected' : '' }}>Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="role" class="form-label" style="color: #000000;">Role</label>
+                            <select name="role" class="form-control" required
+                                style="border: 1px solid #ced4da; border-radius: 4px; padding: 0.375rem 0.75rem;">
+                                <option value="player" {{ $user->role == 'player' ? 'selected' : '' }}>Player</option>
+                                <option value="coach" {{ $user->role == 'coach' ? 'selected' : '' }}>Coach</option>
+                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -102,6 +103,7 @@
         </div>
     </div>
 </div>
+
 <style>
     .form-control {
         font-size: 1rem;

@@ -149,14 +149,5 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User deleted permanently');
     }
 
-    public function showUserPoints($userId)
-    {
-        $user = User::find($userId);
 
-        if (!$user) {
-            return redirect()->route('users.index')->with('error', 'User not found.');
-        }
-
-        return view('admin.tables.points', ['user' => $user]);
-    }
 }
