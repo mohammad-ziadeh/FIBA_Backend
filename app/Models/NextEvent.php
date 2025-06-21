@@ -23,4 +23,9 @@ class NextEvent extends Model
         'start_date' => 'date',
         'end_date' => 'date',
     ];
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'event_team');
+    }
 }
