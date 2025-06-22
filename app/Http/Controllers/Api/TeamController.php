@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Team;
 use App\Models\NextEvent;
+use App\Notifications\TeamAssignedNotification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -43,6 +44,8 @@ class TeamController extends Controller
         return response()->noContent();
     }
 
+
+
     public function assignToEvent(Team $team, NextEvent $event)
     {
         if ($team->coach_id !== auth()->id()) {
@@ -61,8 +64,15 @@ class TeamController extends Controller
 
         $team->events()->syncWithoutDetaching([$event->id]);
 
+        foreach ($team->players as $player) {
+            $player->user->notify(new TeamAssignedNotification($event, auth()->user()));
+        }
+
+
         return response()->json(['message' => 'Team assigned to event']);
     }
+
+
 
 
 

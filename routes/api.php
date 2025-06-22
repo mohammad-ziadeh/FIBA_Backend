@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CustomPlayerController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\NextEventController;
+use App\Http\Resources\NotificationResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +58,88 @@ Route::middleware('auth:sanctum')->get('/users', [UserController::class, 'index'
 
 
 Route::delete('/teams/{team}/players/{player}', [PlayerController::class, 'destroy']);
+
+
+
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Get all notifications
+    Route::get('/notifications', function () {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        return NotificationResource::collection($user->notifications);
+    });
+
+    // Get unread notifications count
+    Route::get('/notifications/unread-count', function () {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        return response()->json([
+            'unread_count' => $user->unreadNotifications->count()
+        ]);
+    });
+
+    // Mark single notification as read
+    Route::post('/notifications/{id}/read', function ($id) {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        $notification = $user->notifications()->findOrFail($id);
+        $notification->markAsRead();
+
+        return response()->json(['message' => 'Notification marked as read']);
+    });
+
+    // Mark all notifications as read
+    Route::post('/notifications/read-all', function () {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        $user->unreadNotifications->markAsRead();
+
+        return response()->json(['message' => 'All notifications marked as read']);
+    });
+
+    // Delete single notification
+    Route::delete('/notifications/{id}', function ($id) {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        $notification = $user->notifications()->findOrFail($id);
+        $notification->delete();
+
+        return response()->json(['message' => 'Notification deleted']);
+    });
+
+    // Delete all notifications
+    Route::delete('/notifications', function () {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        $user->notifications()->delete();
+
+        return response()->json(['message' => 'All notifications deleted']);
+    });
+});

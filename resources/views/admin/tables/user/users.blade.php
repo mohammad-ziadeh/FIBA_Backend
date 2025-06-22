@@ -17,9 +17,9 @@
                     <div class="col-md-2">
                         <select name="role" class="form-control">
                             <option value="all">All Roles</option>
-                            <option value="student" {{ request('role') == 'student' ? 'selected' : '' }}>Student
+                            <option value="player" {{ request('role') == 'player' ? 'selected' : '' }}>Player
                             </option>
-                            <option value="trainer" {{ request('role') == 'trainer' ? 'selected' : '' }}>Trainer
+                            <option value="coach" {{ request('role') == 'coach' ? 'selected' : '' }}>Coach
                             </option>
                             <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                         </select>
@@ -73,12 +73,10 @@
                                 <td>{!! $user->gender === 'male' ? '<i class="fa-solid fa-mars"></i>' : '<i class="fa-solid fa-venus"></i>' !!} {{ $user->first_name . ' ' . $user->last_name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <span class="badge badge-{{ $user->role_badge }}">
-                                        {{ ucfirst($user->role) }}
-                                    </span>
+                                    {{ $user->role }}
                                 </td>
                                 <td>{{ $user->birth_date }}</td>
-                                <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                                <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : 'N/A' }}</td>
                                 <td>
                                     @if (!$user->trashed())
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
@@ -124,58 +122,58 @@
     @include('admin.tables.user.user-create-modal')
 
 
-<!-- External Libraries -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
-<script src="https://cdn.jsdelivr.net/npm/intro.js@4/intro.min.js"></script> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@4/themes/introjs.css"> 
+    <!-- External Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intro.js@4/intro.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@4/themes/introjs.css">
 
-<!-- Custom Scripts -->
-<script>
-    // Confirm Delete (Soft Delete)
-    function confirmDelete(id) {
-        Swal.fire({
-            title: "Are you sure?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('delete-form-' + id).submit();
-            }
+    <!-- Custom Scripts -->
+    <script>
+        // Confirm Delete (Soft Delete)
+        function confirmDelete(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+
+        // Confirm Permanent Delete
+        function confirmPerDelete(id) {
+            Swal.fire({
+                title: "Delete permanently?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('perDelete-form-' + id).submit();
+                }
+            });
+        }
+
+        // Fade alerts after 3 seconds
+        $(document).ready(function() {
+            setTimeout(() => {
+                $('#successMessage').fadeOut('slow');
+                $('#errorMessage').fadeOut('slow');
+            }, 3000);
         });
-    }
 
-    // Confirm Permanent Delete
-    function confirmPerDelete(id) {
-        Swal.fire({
-            title: "Delete permanently?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('perDelete-form-' + id).submit();
-            }
-        });
-    }
-
-    // Fade alerts after 3 seconds
-    $(document).ready(function () {
-        setTimeout(() => {
-            $('#successMessage').fadeOut('slow');
-            $('#errorMessage').fadeOut('slow');
-        }, 3000);
-    });
-
-    // Optional: Tour Button
-    function startTour() {
-        introJs().start();
-    }
-</script>
+        // Optional: Tour Button
+        function startTour() {
+            introJs().start();
+        }
+    </script>
 </x-app-layout>
