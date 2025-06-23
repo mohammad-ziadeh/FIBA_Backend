@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Illuminate\Notifications\DatabaseNotification|null $notification */
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -51,21 +53,34 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->get('/users', [UserController::class, 'index']);
 
+
+
 // Route::middleware('auth:sanctum')->group(function () {
 //     Route::post('/teams/{teamId}/custom-players', [CustomPlayerController::class, 'store']);
 // });
 
 
-
 Route::delete('/teams/{team}/players/{player}', [PlayerController::class, 'destroy']);
+Route::get('/players/search', [PlayerController::class, 'search']);
+Route::get('/players/suggestions', [PlayerController::class, 'suggestions']);
 
 
 
 
 
+Route::get('/next-events/search', [NextEventController::class, 'search']);
+Route::get('/next-events/suggestions', [NextEventController::class, 'suggestions']);
+Route::get('/next-events/{id}', [NextEventController::class, 'show']);
+
+
+
+Route::get('events/{event}/teams', [NextEventController::class, 'getTeamsAssignedToEvent']);
+
+
+
+// Ignore red line error its just a false error
 
 Route::middleware('auth:sanctum')->group(function () {
-    // Get all notifications
     Route::get('/notifications', function () {
         $user = auth()->user();
 
@@ -76,7 +91,6 @@ Route::middleware('auth:sanctum')->group(function () {
         return NotificationResource::collection($user->notifications);
     });
 
-    // Get unread notifications count
     Route::get('/notifications/unread-count', function () {
         $user = auth()->user();
 
@@ -89,7 +103,6 @@ Route::middleware('auth:sanctum')->group(function () {
         ]);
     });
 
-    // Mark single notification as read
     Route::post('/notifications/{id}/read', function ($id) {
         $user = auth()->user();
 
@@ -103,7 +116,6 @@ Route::middleware('auth:sanctum')->group(function () {
         return response()->json(['message' => 'Notification marked as read']);
     });
 
-    // Mark all notifications as read
     Route::post('/notifications/read-all', function () {
         $user = auth()->user();
 
@@ -116,7 +128,6 @@ Route::middleware('auth:sanctum')->group(function () {
         return response()->json(['message' => 'All notifications marked as read']);
     });
 
-    // Delete single notification
     Route::delete('/notifications/{id}', function ($id) {
         $user = auth()->user();
 
@@ -130,7 +141,6 @@ Route::middleware('auth:sanctum')->group(function () {
         return response()->json(['message' => 'Notification deleted']);
     });
 
-    // Delete all notifications
     Route::delete('/notifications', function () {
         $user = auth()->user();
 

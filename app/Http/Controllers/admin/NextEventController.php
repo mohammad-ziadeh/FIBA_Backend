@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\NextEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Notifications\CreatingEventNotification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -80,7 +82,7 @@ class NextEventController extends Controller
             $imageUrl = asset('storage/' . $path);
         }
 
-        NextEvent::create([
+        $event = NextEvent::create([
             'title' => $request->title,
             'location' => $request->location,
             'start_date' => $request->start_date,
@@ -88,6 +90,12 @@ class NextEventController extends Controller
             'event_code' => $request->event_code,
             'image_url' => $imageUrl,
         ]);
+
+
+        $users = User::all();
+        foreach ($users as $user) {
+            $user->notify(new CreatingEventNotification($event));
+        }
 
         return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }

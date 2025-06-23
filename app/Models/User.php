@@ -9,7 +9,14 @@ use Illuminate\Notifications\DatabaseNotification;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
+/**
+ * App\Models\User
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @method \Illuminate\Database\Eloquent\Relations\MorphMany notifications()
+ *
+ * @mixin \Illuminate\Notifications\Notifiable
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, SoftDeletes, Notifiable;

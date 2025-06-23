@@ -44,8 +44,6 @@ class TeamController extends Controller
         return response()->noContent();
     }
 
-
-
     public function assignToEvent(Team $team, NextEvent $event)
     {
         if ($team->coach_id !== auth()->id()) {
@@ -66,7 +64,7 @@ class TeamController extends Controller
 
         foreach ($team->players as $player) {
             $player->user->notify(new TeamAssignedNotification($event, auth()->user()));
-        }
+        } 
 
 
         return response()->json(['message' => 'Team assigned to event']);
@@ -94,4 +92,9 @@ class TeamController extends Controller
 
         return response()->json($team);
     }
+
+
+
+
+
 }
