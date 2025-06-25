@@ -22,6 +22,9 @@
                     <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')" style="color: #eeeeee; text-decoration: none;">
                         {{ __('Events') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('matchups.index')" :active="request()->routeIs('admin.matchups.index')" style="color: #eeeeee; text-decoration: none;">
+                        {{ __('Matchup') }}
+                    </x-nav-link>
                 </div>
             </div>
 

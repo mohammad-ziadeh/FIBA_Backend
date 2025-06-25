@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\CustomPlayerController;
+use App\Http\Controllers\Api\MatchupController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\NextEventController;
@@ -73,10 +74,10 @@ Route::get('/next-events/suggestions', [NextEventController::class, 'suggestions
 Route::get('/next-events/{id}', [NextEventController::class, 'show']);
 
 
-
 Route::get('events/{event}/teams', [NextEventController::class, 'getTeamsAssignedToEvent']);
 
-
+Route::get('/matchups', [MatchupController::class, 'index']);
+Route::get('/matchups/{id}', [MatchupController::class, 'show']);
 
 // Ignore red line error its just a false error
 

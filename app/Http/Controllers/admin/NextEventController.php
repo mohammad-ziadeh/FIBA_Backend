@@ -45,7 +45,7 @@ class NextEventController extends Controller
 
         // -------{{ End Filters }}------- //
 
-        $events = $query->paginate(10);
+        $events = $query->paginate(9);
 
         return view('admin.tables.event.events', compact('events'));
     }

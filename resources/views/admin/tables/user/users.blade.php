@@ -113,9 +113,7 @@
                 </table>
             </div>
 
-            <div class="d-flex justify-content-center mt-3">
-                {{ $users->links() }}
-            </div>
+            @include('components.pagination', [ 'pag' => $users,])
         </div>
     </div>
 

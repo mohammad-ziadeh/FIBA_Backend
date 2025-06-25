@@ -24,8 +24,17 @@ class NextEvent extends Model
         'end_date' => 'date',
     ];
 
+
+
+
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'event_team');
+        return $this->belongsToMany(Team::class, 'event_team', 'event_id', 'team_id');
+    }
+
+
+    public function matchups()
+    {
+        return $this->hasMany(Matchup::class, 'event_id');
     }
 }

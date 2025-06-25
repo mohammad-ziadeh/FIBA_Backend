@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\NextEventController;
+use App\Http\Controllers\admin\MatchupController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Response;
 
@@ -50,6 +51,21 @@ require __DIR__ . '/auth.php';
 
 
 
+
+// Show all matchups for a specific event
+Route::get('/matchups', [MatchupController::class, 'index'])->name('matchups.index');
+
+// Store new matchup
+Route::post('/matchups', [MatchupController::class, 'store'])->name('matchups.store');
+
+// Update an existing matchup
+Route::put('/matchups/{matchup}', [MatchupController::class, 'update'])->name('matchups.update');
+
+// Delete a matchup
+Route::delete('/matchups/{matchup}', [MatchupController::class, 'destroy'])->name('matchups.destroy');
+
+
+
 // Web Image Flutter
 
 
@@ -70,4 +86,4 @@ Route::get('/cors-image/{filename}', function ($filename) {
         'Access-Control-Allow-Methods' => 'GET, OPTIONS',
         'Access-Control-Allow-Headers' => 'Origin, Content-Type, Accept',
     ]);
-})->where('filename', '.*'); 
+})->where('filename', '.*');
