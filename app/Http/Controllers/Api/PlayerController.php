@@ -70,7 +70,6 @@ class PlayerController extends Controller
             $players = $players->where(function ($q) use ($query) {
                 $q->where('first_name', 'like', "%$query%")
                     ->orWhere('last_name', 'like', "%$query%");
-                    
             });
         }
 
@@ -93,6 +92,7 @@ class PlayerController extends Controller
                 // 'city' => $player->city ?? '',
                 'gender' => $player->gender,
                 'age_category' => $this->getAgeCategory($player->birth_date),
+                'avatar_url' => $player->avatar_url ?? '',
             ];
         });
 
@@ -112,7 +112,6 @@ class PlayerController extends Controller
             ->where(function ($query) use ($q) {
                 $query->where('first_name', 'like', "%$q%")
                     ->orWhere('last_name', 'like', "%$q%");
-
             })
             ->limit(10)
             ->get()

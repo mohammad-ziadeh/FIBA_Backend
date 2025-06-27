@@ -18,6 +18,9 @@ return new class extends Migration
             $table->enum('role', ['player', 'coach', 'admin'])->default('player');
             $table->enum('gender', ['male', 'female'])->default('male');
             $table->date('birth_date')->nullable();
+            $table->integer('points')->default(0);
+            $table->string('avatar_url')->nullable();
+            $table->string('background_url')->nullable();
             $table->string('name')->nullable();
             $table->integer('phone')->nullable();
             $table->string('email')->unique();

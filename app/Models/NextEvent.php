@@ -24,14 +24,16 @@ class NextEvent extends Model
         'end_date' => 'date',
     ];
 
-
-
-
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'event_team', 'event_id', 'team_id');
     }
 
+    public function players()
+    {
+        return $this->belongsToMany(Player::class, 'player_event', 'event_id', 'player_id')
+            ->withPivot('points');
+    }
 
     public function matchups()
     {

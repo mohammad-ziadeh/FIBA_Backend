@@ -35,6 +35,8 @@ class User extends Authenticatable
         'role',
         'email',
         'password',
+        'avatar_url',       
+        'background_url',
     ];
 
     /**
@@ -56,4 +58,37 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+
+    public function player()
+    {
+        return $this->hasOne(Player::class);
+    }
+
+    public function getRankTitleAttribute()
+    {
+        $points = $this->points;
+
+        return match (true) {
+            $points >= 500 => 'Legend',
+            $points >= 350 => 'Elite',
+            $points >= 200 => 'All-Star',
+            $points >= 100 => 'Pro Player',
+            default => 'Rookie',
+        };
+    }
+
+
+
+    public function playedEvents()
+    {
+        return $this->players()
+            ->with('team.events')
+            ->get()
+            ->pluck('team.events')
+            ->flatten()
+            ->unique('id')
+            ->values();
+    }
 }

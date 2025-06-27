@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\NextEventController;
 use App\Http\Resources\NotificationResource;
+use App\Http\Controllers\Api\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +58,11 @@ Route::middleware('auth:sanctum')->get('/users', [UserController::class, 'index'
 
 
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show']);     // GET /api/profile
+    Route::post('/profile/upload-image', [ProfileController::class, 'uploadImage']);
+    // PUT /api/profile
+});
 // Route::middleware('auth:sanctum')->group(function () {
 //     Route::post('/teams/{teamId}/custom-players', [CustomPlayerController::class, 'store']);
 // });

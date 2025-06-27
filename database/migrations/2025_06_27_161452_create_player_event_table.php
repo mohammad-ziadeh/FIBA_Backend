@@ -11,22 +11,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('teams', function (Blueprint $table) {
+        Schema::create('player_event', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('location');
+            $table->foreignId('player_id')->constrained()->onDelete('cascade');
+            $table->foreignId('event_id')->constrained('next_events')->onDelete('cascade');
             $table->integer('points')->default(0);
-            $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('player_event');
     }
 };

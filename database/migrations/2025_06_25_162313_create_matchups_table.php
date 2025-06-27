@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('event_id')->constrained('next_events')->onDelete('cascade');
             $table->foreignId('team_a_id')->constrained('teams')->onDelete('cascade');
             $table->foreignId('team_b_id')->constrained('teams')->onDelete('cascade');
+            $table->unsignedTinyInteger('team_a_score')->nullable();
+            $table->unsignedTinyInteger('team_b_score')->nullable();
             $table->timestamp('match_time')->nullable();
             $table->string('location')->nullable();
             $table->string('round')->nullable();
